@@ -10,5 +10,7 @@
 		<h1>{{ post.title }}</h1>
 		<p>{{ post.content }}</p>
 		<h2>{{ post.date | date('d-m-Y')  }}</h2>
+		<h3>{{ post.tag.name }}</h3>
+		<p>{{ post.tag.description }}</p>
 	</body>
 </html>

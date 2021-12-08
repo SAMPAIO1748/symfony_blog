@@ -32,6 +32,11 @@ class Post
      */
     private $date;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Tag::class, inversedBy="posts")
+     */
+    private $tag;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -69,6 +74,18 @@ class Post
     public function setDate(\DateTimeInterface $date): self
     {
         $this->date = $date;
+
+        return $this;
+    }
+
+    public function getTag(): ?Tag
+    {
+        return $this->tag;
+    }
+
+    public function setTag(?Tag $tag): self
+    {
+        $this->tag = $tag;
 
         return $this;
     }
