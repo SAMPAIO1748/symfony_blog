@@ -27,4 +27,14 @@ class TagController extends AbstractController
         $tags = $tagRepository->findAll();
         return $this->render('tags.html.twig', ['tags' => $tags]);
     }
+
+    /**
+     * @Route("/tag/{id}", name="tag_show")
+     */
+    public function tagShow($id, TagRepository $tagRepository)
+    {
+        $tag = $tagRepository->find($id);
+
+        return $this->render("tag.html.twig", ['tag' => $tag]);
+    }
 }
