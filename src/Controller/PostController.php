@@ -29,10 +29,10 @@ class PostController extends AbstractController
 
     /**
      * @Route("posts", name="post_list")
-     */                         //autowire
+     */                         //autowire : permet de simplifier le code en évitant de créer une nouvelle instance
     public function postList(PostRepository $postRepository)
     {
-        $posts = $postRepository->findAll();
+        $posts = $postRepository->findAll(); // fonction qui récupère tous les post de la base de données
         return $this->render('posts.html.twig', ['posts' => $posts]);
     }
 }
