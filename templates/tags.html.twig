@@ -8,7 +8,10 @@
 	</head>
 	<body>
 		{% for tag in tags %}
-			<h2>{{ tag.name }}</h2>
+
+			<a href="{{ path('tag_show', {'id' : tag.id } ) }}">
+				<h2>{{ tag.name }}</h2>
+			</a>
 			<p>{{ tag.description }}</p>
 		{% endfor %}
 	</body>
