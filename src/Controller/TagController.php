@@ -37,4 +37,6 @@ class TagController extends AbstractController
 
         return $this->render("tag.html.twig", ['tag' => $tag]);
     }
+
+    // faire la fonction qui modifie la description d'un tag et qui devient "Les articles du super tag n° " . $id
 }
