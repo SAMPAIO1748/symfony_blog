@@ -35,4 +35,13 @@ class PostController extends AbstractController
         $posts = $postRepository->findAll(); // fonction qui récupère tous les post de la base de données
         return $this->render('posts.html.twig', ['posts' => $posts]);
     }
+
+    /**
+     * @Route("post/{id}", name="post_show")
+     */
+    public function postShow($id, PostRepository $postRepository)
+    {
+        $post = $postRepository->find($id);
+        return $this->render('post.html.twig', ['post' => $post]);
+    }
 }
