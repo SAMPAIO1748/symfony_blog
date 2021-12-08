@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\PostRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -45,5 +46,17 @@ class PostController extends AbstractController
         // fonction find permet de récupérer un élement 
         // de la base de données grâce à son id
         return $this->render('post.html.twig', ['post' => $post]);
+    }
+
+    /**
+     * @Route("update/post/{id}", name="post_update")
+     */
+    public function postUpdate($id, PostRepository $postRepository, EntityManagerInterface $entityManagerInterface)
+    {
+        $post = $postRepository->find($id);
+        $post->setContent("Contenu du super article n° " . $id);
+        $entityManagerInterface->flush(); // flush modifie dans la base de données
+
+        return $this->redirectToRoute('post_list');
     }
 }
