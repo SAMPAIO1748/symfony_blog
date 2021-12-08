@@ -11,7 +11,7 @@
 		<h1>Liste des posts</h1>
 
 		{% for post in posts %}
-			<a href="{{ path('post_show', {'id' : post.id }) }}">
+			<a href="{{ path('post_show', {'id' : post.id }) }}" style="color : {{ post.tag.color }}">
 				<h2>{{ post.title }}</h2>
 			</a>
 			<p>{{ post.content }}</p>
