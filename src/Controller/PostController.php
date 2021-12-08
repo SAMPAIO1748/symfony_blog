@@ -42,6 +42,8 @@ class PostController extends AbstractController
     public function postShow($id, PostRepository $postRepository)
     {
         $post = $postRepository->find($id);
+        // fonction find permet de récupérer un élement 
+        // de la base de données grâce à son id
         return $this->render('post.html.twig', ['post' => $post]);
     }
 }
