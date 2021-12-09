@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Post;
 use App\Repository\PostRepository;
+use App\Repository\TagRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -58,5 +60,23 @@ class PostController extends AbstractController
         $entityManagerInterface->flush(); // flush modifie dans la base de données
 
         return $this->redirectToRoute('post_list');
+    }
+
+    /**
+     * @Route("add/post/", name="post_add")
+     */
+    public function addUpdate(EntityManagerInterface $entityManagerInterface, TagRepository $tagRepository)
+    {
+        $tag = $tagRepository->find(1);
+        $post = new Post();
+        $post->setTitle("Le super titre de l'article de la mort qui tue");
+        $post->setContent("Bonjour à tous le monde");
+        $post->setDate(new \DateTime("NOW"));
+        $post->setTag($tag);
+
+        $entityManagerInterface->persist($post);
+        $entityManagerInterface->flush();
+
+        return $this->redirectToRoute("post_list");
     }
 }

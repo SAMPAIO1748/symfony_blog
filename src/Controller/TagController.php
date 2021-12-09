@@ -52,4 +52,9 @@ class TagController extends AbstractController
 
         return $this->redirectToRoute("tag_list");
     }
+
+    // fonction pour ajouter un tag avec les éléments name "super tag", 
+    //description "le super tag de la mort qui tue"
+    // color "black"
+
 }
