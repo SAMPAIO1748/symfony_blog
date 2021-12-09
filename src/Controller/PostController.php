@@ -88,6 +88,10 @@ class PostController extends AbstractController
         $post = $postRepository->find($id);
         $entityManagerInterface->remove($post); // fonction remove supprime le post sélectionné
         $entityManagerInterface->flush();
+        $this->addFlash(
+            'notice',
+            'Votre post a été supprimé'
+        );
 
         return $this->redirectToRoute("post_list");
     }

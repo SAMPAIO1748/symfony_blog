@@ -8,6 +8,12 @@
 	</head>
 	<body>
 
+		{% for message in app.flashes('notice') %}
+			<div class="flash-notice">
+				{{ message }}
+			</div>
+		{% endfor %}
+
 		<h1>Liste des posts</h1>
 
 		{% for post in posts %}
