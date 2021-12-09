@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\TagRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -39,4 +40,16 @@ class TagController extends AbstractController
     }
 
     // faire la fonction qui modifie la description d'un tag et qui devient "Les articles du super tag n° " . $id
+
+    /**
+     * @Route("/update/tag/{id}", name="tag_update")
+     */
+    public function tagUpdate($id, TagRepository $tagRepository, EntityManagerInterface $entityManagerInterface)
+    {
+        $tag = $tagRepository->find($id);
+        $tag->setDescription("Les articles du super tag n° " . $id);
+        $entityManagerInterface->flush();
+
+        return $this->redirectToRoute("tag_list");
+    }
 }
