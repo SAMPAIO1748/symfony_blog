@@ -91,4 +91,6 @@ class PostController extends AbstractController
 
         return $this->redirectToRoute("post_list");
     }
+
+    // faire une fonction qui va supprimer un tag en fonction de son id.
 }

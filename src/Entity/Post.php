@@ -34,6 +34,7 @@ class Post
 
     /**
      * @ORM\ManyToOne(targetEntity=Tag::class, inversedBy="posts")
+     * @ORM\JoinColumn(name="tag_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $tag;
 

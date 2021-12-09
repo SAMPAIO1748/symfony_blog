@@ -73,4 +73,16 @@ class TagController extends AbstractController
 
         return $this->redirectToRoute("tag_list");
     }
+
+    /**
+     * @Route("delete/tag/{id}", name="delete_tag")
+     */
+    public function deleteTag($id, TagRepository $tagRepository, EntityManagerInterface $entityManagerInterface)
+    {
+        $tag = $tagRepository->find($id);
+        $entityManagerInterface->remove($tag);
+        $entityManagerInterface->flush();
+
+        return $this->redirectToRoute("tag_list");
+    }
 }
