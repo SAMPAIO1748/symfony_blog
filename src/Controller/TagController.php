@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Tag;
 use App\Repository\TagRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -57,4 +58,19 @@ class TagController extends AbstractController
     //description "le super tag de la mort qui tue"
     // color "black"
 
+    /**
+     * @Route("add/tag", name="tag_add")
+     */
+    public function addTag(EntityManagerInterface $entityManagerInterface)
+    {
+        $tag = new Tag();
+        $tag->setName("Super tag");
+        $tag->setDescription("Le super tag de la mort qui tue");
+        $tag->setColor("black");
+
+        $entityManagerInterface->persist($tag);
+        $entityManagerInterface->flush();
+
+        return $this->redirectToRoute("tag_list");
+    }
 }
