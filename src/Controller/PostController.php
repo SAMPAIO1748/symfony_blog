@@ -65,7 +65,7 @@ class PostController extends AbstractController
     /**
      * @Route("add/post/", name="post_add")
      */
-    public function addUpdate(EntityManagerInterface $entityManagerInterface, TagRepository $tagRepository)
+    public function addPost(EntityManagerInterface $entityManagerInterface, TagRepository $tagRepository)
     {
         $tag = $tagRepository->find(1);
         $post = new Post();
@@ -76,6 +76,18 @@ class PostController extends AbstractController
 
         $entityManagerInterface->persist($post); // pré-enregistre dans la base de données
         $entityManagerInterface->flush(); // Enregistre dans la pase de données.
+
+        return $this->redirectToRoute("post_list");
+    }
+
+    /**
+     * @Route("/delete/post/{id}", name="post_delete")
+     */
+    public function deletePost($id, PostRepository $postRepository, EntityManagerInterface $entityManagerInterface)
+    {
+        $post = $postRepository->find($id);
+        $entityManagerInterface->remove($post); // fonction remove supprime le post sélectionné
+        $entityManagerInterface->flush();
 
         return $this->redirectToRoute("post_list");
     }
