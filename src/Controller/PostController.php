@@ -74,8 +74,8 @@ class PostController extends AbstractController
         $post->setDate(new \DateTime("NOW"));
         $post->setTag($tag);
 
-        $entityManagerInterface->persist($post);
-        $entityManagerInterface->flush();
+        $entityManagerInterface->persist($post); // pré-enregistre dans la base de données
+        $entityManagerInterface->flush(); // Enregistre dans la pase de données.
 
         return $this->redirectToRoute("post_list");
     }
