@@ -85,19 +85,26 @@ class PostController extends AbstractController
     /**
      * @Route("add/post/", name="post_add")
      */
-    public function addPost(EntityManagerInterface $entityManagerInterface, TagRepository $tagRepository)
-    {
-        $tag = $tagRepository->find(1);
+    public function addPost(
+        EntityManagerInterface $entityManagerInterface,
+        Request $request
+    ) {
+
         $post = new Post();
-        $post->setTitle("Le super titre de l'article de la mort qui tue");
-        $post->setContent("Bonjour à tous le monde");
-        $post->setDate(new \DateTime("NOW"));
-        $post->setTag($tag);
 
-        $entityManagerInterface->persist($post); // pré-enregistre dans la base de données
-        $entityManagerInterface->flush(); // Enregistre dans la pase de données.
+        $postForm = $this->createForm(PostType::class, $post);
 
-        return $this->redirectToRoute("post_list");
+        $postForm->handleRequest($request);
+
+        if ($postForm->isSubmitted() && $postForm->isValid()) {
+            $post->setDate(new \DateTime("NOW"));
+            $entityManagerInterface->persist($post);
+            $entityManagerInterface->flush();
+
+            return $this->redirectToRoute("post_list");
+        }
+
+        return $this->render('postupdate.html.twig', ['postForm' => $postForm->createView()]);
     }
 
     /**
