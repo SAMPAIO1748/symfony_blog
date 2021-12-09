@@ -3,10 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Post;
+use App\Form\PostType;
 use App\Repository\PostRepository;
 use App\Repository\TagRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -53,13 +55,24 @@ class PostController extends AbstractController
     /**
      * @Route("update/post/{id}", name="post_update")
      */
-    public function postUpdate($id, PostRepository $postRepository, EntityManagerInterface $entityManagerInterface)
-    {
+    public function postUpdate(
+        $id,
+        PostRepository $postRepository,
+        EntityManagerInterface $entityManagerInterface,
+        Request $request
+    ) {
         $post = $postRepository->find($id);
-        $post->setContent("Contenu du super article n° " . $id);
-        $entityManagerInterface->flush(); // flush modifie dans la base de données
 
-        return $this->redirectToRoute('post_list');
+        // Création du formulaire
+        $postForm = $this->createForm(PostType::class, $post);
+
+        // Utilisation de handleRequest pour demander au formulaire de traiter les infos
+        // rentrées dans le formulaire
+        // Utilisation de request pour récupérer les informations rentrées dans le fromulaire
+        $postForm->handleRequest($request);
+
+        // redirige vers la page où le formulaire est affiché.
+        return $this->render('postupdate.html.twig', ['postForm' => $postForm->createView()]);
     }
 
     /**

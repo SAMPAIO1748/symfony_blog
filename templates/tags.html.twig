@@ -7,6 +7,13 @@
 		<title>Document</title>
 	</head>
 	<body>
+
+		{% for message in app.flashes('notice') %}
+			<div class="flash-notice">
+				{{ message }}
+			</div>
+		{% endfor %}
+
 		{% for tag in tags %}
 
 			<a href="{{ path('tag_show', {'id' : tag.id } ) }}">

@@ -82,6 +82,10 @@ class TagController extends AbstractController
         $tag = $tagRepository->find($id);
         $entityManagerInterface->remove($tag);
         $entityManagerInterface->flush();
+        $this->addFlash(
+            'notice',
+            'Votre tag a été supprimé'
+        );
 
         return $this->redirectToRoute("tag_list");
     }
