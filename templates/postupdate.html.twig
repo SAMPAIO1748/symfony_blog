@@ -17,6 +17,9 @@
 		{{ form_label(postForm.content, 'Contenu du post : ', {'label_attr' : {'class' : 'label'} } ) }}
 		{{ form_widget(postForm.content, { 'attr' : {'placeholder' : 'Contenu du post' }  } ) }}
 
+		{{ form_label(postForm.tag, 'Tag du post : ', {'label_attr' : {'class' : 'label'} } ) }}
+		{{ form_widget(postForm.tag)}}
+
 		{{ form_widget(postForm.submit, { 'attr' : {'label' : 'Enregistrer' }  } ) }}
 
 		{{ form_end(postForm) }}
