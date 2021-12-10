@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Document</title>
+	</head>
+	<body>
+		{{ form_start(tagForm) }}
+		{{ form_widget(tagForm.name, { 'attr' : { 'placeholder' : 'Nom du tag' } } ) }}
+		{{ form_widget(tagForm.description, { 'attr' : { 'placeholder' : 'Description du tag' } } ) }}
+		{{ form_widget(tagForm.color, { 'attr' : { 'placeholder' : 'Couleur du tag' } } ) }}
+		{{ form_end(tagForm) }}
+
+	</body>
+</html>

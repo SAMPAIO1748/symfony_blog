@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Tag;
+use App\Form\TagType;
 use App\Repository\TagRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -45,13 +47,26 @@ class TagController extends AbstractController
     /**
      * @Route("/update/tag/{id}", name="tag_update")
      */
-    public function tagUpdate($id, TagRepository $tagRepository, EntityManagerInterface $entityManagerInterface)
-    {
+    public function tagUpdate(
+        $id,
+        TagRepository $tagRepository,
+        EntityManagerInterface $entityManagerInterface,
+        Request $request
+    ) {
         $tag = $tagRepository->find($id);
-        $tag->setDescription("Les articles du super tag n° " . $id);
-        $entityManagerInterface->flush();
 
-        return $this->redirectToRoute("tag_list");
+        $tagForm = $this->createForm(TagType::class, $tag);
+
+        $tagForm->handleRequest($request);
+
+        if ($tagForm->isSubmitted() && $tagForm->isValid()) {
+            $entityManagerInterface->persist($tag);
+            $entityManagerInterface->flush();
+
+            return $this->redirectToRoute('tag_list');
+        }
+
+        return $this->render('tagupdate.html.twig', ['tagForm' => $tagForm->createView()]);
     }
 
     // fonction pour ajouter un tag avec les éléments name "super tag", 
@@ -61,17 +76,22 @@ class TagController extends AbstractController
     /**
      * @Route("add/tag", name="tag_add")
      */
-    public function addTag(EntityManagerInterface $entityManagerInterface)
+    public function addTag(EntityManagerInterface $entityManagerInterface, Request $request)
     {
         $tag = new Tag();
-        $tag->setName("Super tag");
-        $tag->setDescription("Le super tag de la mort qui tue");
-        $tag->setColor("black");
 
-        $entityManagerInterface->persist($tag);
-        $entityManagerInterface->flush();
+        $tagForm = $this->createForm(TagType::class, $tag);
 
-        return $this->redirectToRoute("tag_list");
+        $tagForm->handleRequest($request);
+
+        if ($tagForm->isSubmitted() && $tagForm->isValid()) {
+            $entityManagerInterface->persist($tag);
+            $entityManagerInterface->flush();
+
+            return $this->redirectToRoute('tag_list');
+        }
+
+        return $this->render('tagupdate.html.twig', ['tagForm' => $tagForm->createView()]);
     }
 
     /**
